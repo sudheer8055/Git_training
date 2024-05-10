@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+       stage ('checkout source code') {
+           steps {
+               script {
+                   checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github_PAT', url: 'https://github.com/sudheer8055/Git_training.git']])
+               }
+          }
+
+        }
+
+        stage ('analysing the file in github') {
+            steps {
+                script {
+                    sh 'cat test'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            deleteDir()
+        }
+    }
+
+}
